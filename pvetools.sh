@@ -1,6 +1,6 @@
 #!/bin/bash
 #############--Proxmox VE Tools--##########################
-#  Author : 龙天ivan
+#  Author : 龍天ivan
 #  Mail: ivanhao1984@qq.com
 #  Version: v2.2.5
 #  Github: https://github.com/ivanhao/pvetools
@@ -60,7 +60,7 @@ fi
 smbp(){
 m=$(whiptail --title "Password Box" --passwordbox "
 Enter samba user 'admin' password:
-请输入samba用户admin的密码：
+請輸入samba用戶admin的密碼：
                 " 10 60 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -69,7 +69,7 @@ if [ $exitstatus = 0 ]; then
         if [[ ! `echo $m|grep "^[0-9a-zA-Z.-@]*$"` ]] || [[ $m = '^M' ]];then
             whiptail --title "Warnning" --msgbox "
 Wrong format!!!   input again:
-密码格式不对！！！请重新输入：
+密碼格式不對！！！請重新輸入：
             " 10 60
             smbp
         else
@@ -79,13 +79,13 @@ Wrong format!!!   input again:
 fi
 }
 
-#修改debian的镜像源地址：
+#修改debian的鏡像源地址：
 chSource(){
 clear
 if [ $1 ];then
     #x=a
     whiptail --title "Warnning" --msgbox "Not supported!
-    不支持该模式。" 10 60
+    不支持該模式。" 10 60
     chSource
 fi
 sver=`cat /etc/debian_version |awk -F"." '{print $1}'`
@@ -110,11 +110,11 @@ case "$sver" in
 esac
 if [ ! $sver ];then
     whiptail --title "Warnning" --msgbox "Not supported!
-    您的版本不支持！无法继续。" 10 60
+    您的版本不支持！無法繼續。" 10 60
     main
 fi
     #"a" "Automation mode." \
-    #"a" "无脑模式" \
+    #"a" "無腦模式" \
 if [ $L = "en" ];then
     OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "Config apt source:" 25 60 15 \
     "b" "Change to cn source." \
@@ -123,18 +123,18 @@ if [ $L = "en" ];then
     "q" "Main menu." \
     3>&1 1>&2 2>&3)
 else
-    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置apt镜像源:" 25 60 15 \
-    "b" "更换为国内源" \
-    "c" "关闭企业更新源" \
-    "d" "还原配置" \
-    "q" "返回主菜单" \
+    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置apt鏡像源:" 25 60 15 \
+    "b" "更換爲國内源" \
+    "c" "關閉企業更新源" \
+    "d" "還原配置" \
+    "q" "返回主菜單" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     case "$OPTION" in
 a | A )
-    if (whiptail --title "Yes/No Box" --yesno "修改为ustc.edu.cn源，禁用企业订阅更新源，添加非订阅更新源(ustc.edu.cn),修改ceph镜像更新源" 10 60) then
+    if (whiptail --title "Yes/No Box" --yesno "修改爲ustc.edu.cn源，禁用企業訂閱更新源，添加非訂閱更新源(ustc.edu.cn),修改ceph鏡像更新源" 10 60) then
         if [ `grep "ustc.edu.cn" /etc/apt/sources.list|wc -l` = 0 ];then
             #sver=`cat /etc/apt/sources.list|awk 'NR==1{print $3}'`
             cp /etc/apt/sources.list /etc/apt/sources.list.bak
@@ -149,21 +149,21 @@ a | A )
     deb-src https://mirrors.ustc.edu.cn/debian/ $sver-backports main contrib non-free
     deb https://mirrors.ustc.edu.cn/debian-security/ $sver/updates main contrib non-free
     deb-src https://mirrors.ustc.edu.cn/debian-security/ $sver/updates main contrib non-free" > /etc/apt/sources.list
-            #修改pve 5.x更新源地址为非订阅更新源，不使用企业订阅更新源。
+            #修改pve 5.x更新源地址爲非訂閱更新源，不使用企業訂閱更新源。
             echo "deb http://mirrors.ustc.edu.cn/proxmox/debian/pve/ $sver pve-no-subscription" > /etc/apt/sources.list.d/pve-no-sub.list
             #关闭pve 5.x企业订阅更新源
             sed -i 's|deb|#deb|' /etc/apt/sources.list.d/pve-enterprise.list
-            #修改 ceph镜像更新源
+            #修改 ceph鏡像更新源
             echo "deb http://mirrors.ustc.edu.cn/proxmox/debian/ceph-luminous $sver main" > /etc/apt/sources.list.d/ceph.list
             whiptail --title "Success" --msgbox " apt source has been changed successfully!
-            软件源已更换成功！" 10 60
+            軟件源已更換成功！" 10 60
             apt-get update
             apt-get -y install net-tools
             whiptail --title "Success" --msgbox " apt source has been changed successfully!
-软件源已更换成功！" 10 60
+軟件源已更換成功！" 10 60
         else
             whiptail --title "Success" --msgbox " Already changed apt source to ustc.edu.cn!
-已经更换apt源为 ustc.edu.cn" 10 60
+已經更換apt源爲 ustc.edu.cn" 10 60
         fi
         if [ ! $1 ];then
             chSource
@@ -178,10 +178,10 @@ a | A )
             "q" "Main menu." \
             3>&1 1>&2 2>&3)
         else
-            OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置apt镜像源:" 25 60 15 \
+            OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置apt鏡像源:" 25 60 15 \
             "a" "aliyun.com" \
             "b" "ustc.edu.cn" \
-            "q" "返回主菜单" \
+            "q" "返回主菜單" \
             3>&1 1>&2 2>&3)
         fi
         exitstatus=$?
@@ -196,7 +196,7 @@ a | A )
                 q )
                     chSource
             esac
-            if (whiptail --title "Yes/No Box" --yesno "修改更新源为$ss?" 10 60) then
+            if (whiptail --title "Yes/No Box" --yesno "修改更新源爲$ss?" 10 60) then
                 if [ `grep $ss /etc/apt/sources.list|wc -l` = 0 ];then
                     cp /etc/apt/sources.list /etc/apt/sources.list.bak
                     #cp /etc/apt/sources.list.d/ceph.list /etc/apt/sources.list.d/ceph.list.bak
@@ -209,19 +209,19 @@ a | A )
         deb-src https://mirrors.$ss/debian/ $sver-backports main contrib non-free
         deb https://mirrors.$ss/debian-security/ $sver/updates main contrib non-free
         deb-src https://mirrors.$ss/debian-security/ $sver/updates main contrib non-free" > /etc/apt/sources.list
-                    #修改 ceph镜像更新源
+                    #修改 ceph鏡像更新源
                     #echo "deb http://mirrors.$ss/proxmox/debian/ceph-luminous $sver main" > /etc/apt/sources.list.d/ceph.list
-                    #修改pve 更新源地址为非订阅更新源，不使用企业订阅更新源。
+                    #修改pve 更新源地址爲非訂閱更新源，不使用企業訂閱更新源。
                     echo "deb http://mirrors.ustc.edu.cn/proxmox/debian/pve/ $sver pve-no-subscription" > /etc/apt/sources.list.d/pve-no-sub.list
                     whiptail --title "Success" --msgbox " apt source has been changed successfully!
-                    软件源已更换成功！" 10 60
+                    軟件源已更換成功！" 10 60
                     apt-get update
                     apt-get -y install net-tools
                     whiptail --title "Success" --msgbox " apt source has been changed successfully!
-                    软件源已更换成功！" 10 60
+                    軟件源已更換成功！" 10 60
                 else
                     whiptail --title "Success" --msgbox " Already changed apt source to $ss!
-已经更换apt源为 $ss" 10 60
+已經更換apt源爲 $ss" 10 60
                 fi
             else
                 chSource
@@ -232,23 +232,23 @@ a | A )
         fi
         ;;
     c | C  )
-    if (whiptail --title "Yes/No Box" --yesno "禁用企业订阅更新源?" 10 60) then
+    if (whiptail --title "Yes/No Box" --yesno "禁用企業訂閱更新源?" 10 60) then
         #sver=`cat /etc/apt/sources.list|awk 'NR==1{print $3}'`
         if [ -f /etc/apt/sources.list.d/pve-no-sub.list ];then
-            #修改pve 5.x更新源地址为非订阅更新源，不使用企业订阅更新源
+            #修改pve 5.x更新源地址爲非訂閱更新源，不使用企業訂閱更新源
             echo "deb http://mirrors.ustc.edu.cn/proxmox/debian/pve/ $sver pve-no-subscription" > /etc/apt/sources.list.d/pve-no-sub.list
         else
             whiptail --title "Success" --msgbox " apt source has been changed successfully!
-            软件源已更换成功！" 10 60
+            軟件源已更換成功！" 10 60
         fi
         if [ `grep "^deb" /etc/apt/sources.list.d/pve-enterprise.list|wc -l` != 0 ];then
-            #关闭pve 5.x企业订阅更新源
+            #關閉pve 5.x企業訂閱更新源
             sed -i 's|deb|#deb|' /etc/apt/sources.list.d/pve-enterprise.list
             whiptail --title "Success" --msgbox " apt source has been changed successfully!
-            软件源已更换成功！" 10 60
+            軟件源已更換成功！" 10 60
         else
             whiptail --title "Success" --msgbox " apt source has been changed successfully!
-            软件源已更换成功！" 10 60
+            軟件源已更換成功！" 10 60
         fi
         chSource
     fi
@@ -259,7 +259,7 @@ d | D )
     cp /etc/apt/sources.list.d/pve-enterprise.list.bak /etc/apt/sources.list.d/pve-enterprise.list
     #cp /etc/apt/sources.list.d/ceph.list.bak /etc/apt/sources.list.d/ceph.list
     whiptail --title "Success" --msgbox "apt source has been changed successfully!
-    软件源已更换成功！" 10 60
+    軟件源已更換成功！" 10 60
     chSource
     ;;
 q )
@@ -275,7 +275,7 @@ chMail(){
 addMail(){
 if (whiptail --title "Yes/No Box" --yesno "
 Will you want to config mailutils & postfix to send notification?(Y/N):
-是否配置mailutils和postfix来发送邮件通知？
+是否配置mailutils和postfix來發送郵件通知？
 " 10 60);then
     qqmail=$(whiptail --title "Config mail" --inputbox "
 Input email adress:
@@ -290,7 +290,7 @@ Input email adress:
             else
                 whiptail --title "Warnning" --msgbox "
 Wrong email format!!!   input xxxx@qq.com for example.retry:
-错误的邮箱格式！！！请输入类似xxxx@qq.com并重试：
+錯誤的郵箱格式！！！請輸入類似xxxx@qq.com并重試：
                 " 10 60
                 addMail
             fi
@@ -317,7 +317,7 @@ Wrong email format!!!   input xxxx@qq.com for example.retry:
         echo "This is a mail test." |mail -s "mail test" root
         whiptail --title "Success" --msgbox "
 Config complete and send test email to you.
-已经配置好并发送了测试邮件。
+已經配置好并發送了測試郵件。
         " 10 60
         main
     else
@@ -330,7 +330,7 @@ fi
 if [ -f /etc/mailname ];then
     if (whiptail --title "Yes/No Box" --yesno "
 It seems you have already configed it before.Reconfig?
-您好像已经配置过这个了。重新配置？
+您好像已經配置過這個了。重新配置？
     " --defaultno 10 60);then
         addMail
     else
@@ -345,7 +345,7 @@ chZfs(){
 setMen(){
     x=$(whiptail --title "Config ZFS" --inputbox "
 set max zfs ram 4(G) or 8(G) etc, just enter number or n?
-设置最大zfs内存（zfs_arc_max),比如4(G)或8(G)等, 只需要输入纯数字即可，比如4G输入4?
+設置最大zfs内存（zfs_arc_max),比如4(G)或8(G)等, 隻需要輸入純數字即可，比如4G輸入4?
     " 20 60    3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
@@ -366,13 +366,13 @@ set max zfs ram 4(G) or 8(G) etc, just enter number or n?
                 }|whiptail --gauge "installing" 10 60 0
                 whiptail --title "Success" --msgbox "
 Config complete!you should reboot later.
-配置完成，一会儿最好重启一下系统。
+配置完成，一會兒最好重啓一下系統。
                 " 10 60
                 break
             else
                 whiptail --title "Warnning" --msgbox "
 Invalidate value.Please comfirm!
-输入的值无效，请重新输入!
+輸入的值無效，請重新輸入!
                 " 10 60
                 setMen
             fi
@@ -380,14 +380,14 @@ Invalidate value.Please comfirm!
         #zfs-zed
         if (whiptail --title "Yes/No Box" --yesno "
     Install zfs-zed to get email notification of zfs scrub?(Y/n):
-    安装zfs-zed来发送zfs scrub的结果提醒邮件？(Y/n):
+    安裝zfs-zed來發送zfs scrub的結果提醒郵件？(Y/n):
         " 10 60);then
             if [ `dpkg -l|grep zfs-zed|wc -l` = 0 ];then
                 apt-get -y install zfs-zed
             fi
             whiptail --title "Success" --msgbox "
     Install complete!
-    安装zfs-zed成功！
+    安裝zfs-zed成功！
             " 10 60
         else
             chZfs
@@ -401,7 +401,7 @@ if [ ! -f /etc/modprobe.d/zfs.conf ] || [ `grep "zfs_arc_max" /etc/modprobe.d/zf
 else
     if(whiptail --title "Yes/No box" --yesno "
 It seems you have already configed it before.Reconfig?
-您好像已经配置过这个了。是否重新配置？
+您好像已經配置過這個了。是否重新配置？
     " --defaultno 10 60 );then
         setMen
     else
@@ -414,13 +414,13 @@ chSamba(){
 #config samba
         addSmbRecycle(){
             if(whiptail --title "Yes/No" --yesno "enable recycle?
-开启回收站？" 10 60 )then
+開啓回收站？" 10 60 )then
                 if [ ! -f '/etc/samba/smb.conf' ];then
                     whiptail --title "Warnning" --msgbox "You should install samba first!
-    请先安装samba！" 10 60
+    請先安裝samba！" 10 60
                 else
                     if [ `sed -n "/\[$2\]/,/$2 end/p" /etc/samba/smb.conf|egrep '^recycle'|wc -l` != 0 ];then
-                        whiptail --title "Warnning" --msgbox "Already configed!  已经配置过了。" 10 60
+                        whiptail --title "Warnning" --msgbox "Already configed!  已經配置過了。" 10 60
                         smbRecycle
                     else
                         cat << EOF > ./recycle
@@ -460,10 +460,10 @@ EOF
         delSmbRecycle(){
             if [ ! -f '/etc/samba/smb.conf' ];then
                 whiptail --title "Warnning" --msgbox "You should install samba first!
-请先安装samba！" 10 60
+請先安裝samba！" 10 60
             else
                 if [ `sed -n "/\[$1\]/,/$1 end/p" /etc/samba/smb.conf|egrep '^recycle'|wc -l` = 0 ];then
-                    whiptail --title "Warnning" --msgbox "Already configed!  已经配置过了。" 10 60
+                    whiptail --title "Warnning" --msgbox "Already configed!  已經配置過了。" 10 60
                     smbRecycle
                 else
                     cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
@@ -488,11 +488,11 @@ if [ $L = "en" ];then
     3>&1 1>&2 2>&3)
 else
     OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置samba:" 25 60 15 \
-    "a" "安装配置samba并配置好samba用户" \
-    "b" "添加共享文件夹" \
-    "c" "取消共享文件夹" \
+    "a" "安裝配置samba并配置好samba用戶" \
+    "b" "添加共享文件夾" \
+    "c" "取消共享文件夾" \
     "d" "配置回收站" \
-    "q" "返回主菜单" \
+    "q" "返回主菜單" \
     3>&1 1>&2 2>&3)
 fi
 if [ $1 ];then
@@ -504,7 +504,7 @@ if [ $exitstatus = 0 ]; then
     a | A )
         if [ `grep samba /etc/group|wc -l` = 0 ];then
             if (whiptail --title "Yes/No Box" --yesno "set samba and admin user for samba?
-安装samba并配置admin为samba用户？
+安裝samba并配置admin爲samba用戶？
                 " 10 60);then
                 apt -y install samba
                 groupadd samba
@@ -512,14 +512,14 @@ if [ $exitstatus = 0 ]; then
                 smbp
                 echo -e "$m\n$m"|smbpasswd -a admin
                 service smbd restart
-                echo -e "已成功配置好samba，请记好samba用户admin的密码！"
+                echo -e "已成功配置好samba，請記好samba用戶admin的密碼！"
                 whiptail --title "Success" --msgbox "
-已成功配置好samba，请记好samba用户admin的密码！
+已成功配置好samba，請記好samba用戶admin的密碼！
                 " 10 60
             fi
         else
             whiptail --title "Success" --msgbox "Already configed samba.
-已配置过samba，没什么可做的!
+已配置過samba，沒什麽可做的!
             " 10 60
                     fi
         if [ ! $1 ];then
@@ -528,10 +528,10 @@ if [ $exitstatus = 0 ]; then
         ;;
     b | B )
        # echo -e "Exist share folders:"
-       # echo -e "已有的共享目录："
+       # echo -e "已有的共享目錄："
        # echo "`grep "^\[[0-9a-zA-Z.-]*\]$" /etc/samba/smb.conf|awk 'NR>3{print $0}'`"
        # echo -e "Input share folder path:"
-       # echo -e "输入共享文件夹的路径:"
+       # echo -e "輸入共享文件夾的路徑:"
        addFolder(){
         h=`grep "^\[[0-9a-zA-Z.-]*\]$" /etc/samba/smb.conf|awk 'NR>3{print $0}'|wc -l`
         if [ $h -lt 3 ];then
@@ -541,26 +541,26 @@ if [ $exitstatus = 0 ]; then
         fi
         x=$(whiptail --title "Add Samba Share folder" --inputbox "
 Exist share folders:
-已有的共享目录：
+已有的共享目錄：
 ----------------------------------------
 $(grep -Ev "-recycle|.deleted$" /etc/samba/smb.conf|grep -E "^\[[0-9a-zA-Z.-]*\]$|^path"|sed 's/path/        path/'|awk 'NR>3{print $0}')
 ----------------------------------------
 Input share folder path(like /root):
-输入共享文件夹的路径(只需要输入/root类似的路径):
+輸入共享文件夾的路徑(隻需要輸入/root類似的路徑):
 " $h 60 "" 3>&1 1>&2 2>&3)
         exitstatus=$?
         if [ $exitstatus = 0 ]; then
             while [ ! -d $x ]
             do
                 whiptail --title "Success" --msgbox "Path not exist!
-路径不存在！
+路徑不存在！
                 " 10 60
                 addFolder
             done
             while [ `grep "path \= ${x}$" /etc/samba/smb.conf|wc -l` != 0 ]
             do
                 whiptail --title "Success" --msgbox "Path exist!
-路径已存在！
+路徑已存在！
                 " 10 60
                 addFolder
             done
@@ -569,7 +569,7 @@ Input share folder path(like /root):
             do
                 n=$(whiptail --title "Samba Share folder" --inputbox "
 Input share name:
-输入共享名称：
+輸入共享名稱：
     " 10 60 "" 3>&1 1>&2 2>&3)
                 exitstatus=$?
                 if [ $exitstatus = 0 ]; then
@@ -607,7 +607,7 @@ Configed!
                 service smbd restart
             else
                 whiptail --title "Success" --msgbox "Already configed！
-已经配置过了！
+已經配置過了！
                 " 10 60
             fi
             addFolder
@@ -627,12 +627,12 @@ Configed!
         fi
         n=$(whiptail --title "Remove Samba Share folder" --inputbox "
 Exist share folders:
-已有的共享目录：
+已有的共享目錄：
 ----------------------------------------
 $(grep -Ev "-recycle|.deleted$" /etc/samba/smb.conf|grep -E "^\[[0-9a-zA-Z.-]*\]$|^path"|sed 's/path/        path/'|awk 'NR>3{print $0}')
 ----------------------------------------
 Input share folder name(type words in []):
-输入共享文件夹的名称(只需要输入[]中的名字):
+輸入共享文件夾的名稱(隻需要輸入[]中的名字):
         " $h 60 "" 3>&1 1>&2 2>&3)
         exitstatus=$?
         if [ $exitstatus = 0 ]; then
@@ -640,7 +640,7 @@ Input share folder name(type words in []):
             do
                 whiptail --title "Success" --msgbox "
 Name not exist!:
-名称不存在！:
+名稱不存在！:
                 " 10 60
                 delFolder
             done
@@ -675,8 +675,8 @@ Configed!
                 3>&1 1>&2 2>&3)
             else
                 x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置samba回收站！" 12 60 4 \
-                "a" "开启samba回收站。" \
-                "b" "关闭samba回收站。" \
+                "a" "開啓samba回收站。" \
+                "b" "關閉samba回收站。" \
                 "c" "清空samba回收站。" \
                 3>&1 1>&2 2>&3)
             fi
@@ -693,12 +693,12 @@ Configed!
                             fi
                             n=$(whiptail --title "Remove Samba recycle" --inputbox "
 Exist share folders:
-已有的共享目录：
+已有的共享目錄：
 ----------------------------------------
 $(grep -Ev "-recycle|.deleted$" /etc/samba/smb.conf|grep -E "^\[[0-9a-zA-Z.-]*\]$|^path"|sed 's/path/        path/'|awk 'NR>3{print $0}')
 ----------------------------------------
 Input share folder name(type words in []):
-输入共享文件夹的名称(只需要输入[]中的名字):
+輸入共享文件夾的名稱(隻需要輸入[]中的名字):
                             " $h 60 "" 3>&1 1>&2 2>&3)
                             exitstatus=$?
                             if [ $exitstatus = 0 ]; then
@@ -706,13 +706,13 @@ Input share folder name(type words in []):
                                 do
                                     whiptail --title "Success" --msgbox "
 Name not exist!:
-名称不存在！:
+名稱不存在！:
                                     " 10 60
                                     enSmbRecycle
                                 done
                                 if [ `grep "^\[${n}\]$" /etc/samba/smb.conf|wc -l` != 0 ];then
                                     if [ `sed -n "/\[${n}\]/,/${n} end/p" /etc/samba/smb.conf|egrep '^recycle'|wc -l` != 0 ];then
-                                        whiptail --title "Warnning" --msgbox "Already configed!  已经配置过了。" 10 60
+                                        whiptail --title "Warnning" --msgbox "Already configed!  已經配置過了。" 10 60
                                         smbRecycle
                                     else
                                         x=`sed -n "/\[${n}\]/,/${n} end/p" /etc/samba/smb.conf|grep path|awk '{print $3}'`
@@ -737,12 +737,12 @@ Name not exist!:
                             fi
                             n=$(whiptail --title "Remove Samba recycle" --inputbox "
 Exist share folders:
-已有的共享目录：
+已有的共享目錄：
 ----------------------------------------
 $(grep -Ev "-recycle|.deleted$" /etc/samba/smb.conf|grep -E "^\[[0-9a-zA-Z.-]*\]$|^path"|sed 's/path/        path/'|awk 'NR>3{print $0}')
 ----------------------------------------
 Input share folder name(type words in []):
-输入共享文件夹的名称(只需要输入[]中的名字):
+輸入共享文件夾的名稱(隻需要輸入[]中的名字):
                             " $h 60 "" 3>&1 1>&2 2>&3)
                             exitstatus=$?
                             if [ $exitstatus = 0 ]; then
@@ -750,14 +750,14 @@ Input share folder name(type words in []):
                                 do
                                     whiptail --title "Success" --msgbox "
 Name not exist!:
-名称不存在！:
+名稱不存在！:
                                     " 10 60
                                     disSmbRecycle
                                 done
                                 x=`sed -n "/\[${n}\]/,/${n} end/p" /etc/samba/smb.conf|grep path|awk '{print $3}'`
                                 if [ `ls $x/.deleted/|wc -l` != 0 ];then
                                     if(whiptail --title "Warnning" --yesno "recycle not empty, you should clear it first.continue?
-回收站中存在文件，建议先清空，是否确认要继续？" 10 60);then
+回收站中存在文件，建議先清空，是否确認要繼續？" 10 60);then
                                         if [ `grep "^\[${n}\]$" /etc/samba/smb.conf|wc -l` != 0 ];then
                                             delSmbRecycle $n
                                             service smbd restart
@@ -780,15 +780,15 @@ you can disable recycle to clear it.
 clear recycle may cause data lose,pvetools will not response for that,do you agree?
 type 'YesIdo' to continue:
 你可以先取消回收站再手工清空。
-工具清空samba回收站不可逆，pvetools不会对此操作负责，是否同意？
-如果确认要清空，请输入'YesIdo'继续：" 20 60 "" 3>&1 1>&2 2>&3)
+工具清空samba回收站不可逆，pvetools不會對此操作負責，是否同意？
+如果确認要清空，請輸入'YesIdo'繼續：" 20 60 "" 3>&1 1>&2 2>&3)
                             exitstatus=$?
                             if [ $exitstatus = 0 ]; then
                                 while [ $c != 'YesIdo' ]
                                 do
                                     whiptail --title "Success" --msgbox "
 Woring words,try again:
-输入错误，请重试:
+輸入錯誤，請重試:
                                     " 10 60
                                     checkClearSmb
                                 done
@@ -805,12 +805,12 @@ Woring words,try again:
                             fi
                             n=$(whiptail --title "Clear Samba recycle" --inputbox "
 Exist share folders:
-已有的共享目录：
+已有的共享目錄：
 ----------------------------------------
 $(grep -Ev "-recycle|.deleted$" /etc/samba/smb.conf|grep -E "^\[[0-9a-zA-Z.-]*\]$|^path"|sed 's/path/        path/'|awk 'NR>3{print $0}')
 ----------------------------------------
 Input share folder name(type words in []):
-输入共享文件夹的名称(只需要输入[]中的名字):
+輸入共享文件夾的名稱(隻需要輸入[]中的名字):
                             " $h 60 "" 3>&1 1>&2 2>&3)
                             exitstatus=$?
                             if [ $exitstatus = 0 ]; then
@@ -818,14 +818,14 @@ Input share folder name(type words in []):
                                 do
                                     whiptail --title "Success" --msgbox "
 Name not exist!:
-名称不存在！:
+名稱不存在！:
                                     " 10 60
                                     clearSmbRecycle
                                 done
                                 x=`sed -n "/\[${n}\]/,/${n} end/p" /etc/samba/smb.conf|grep path|awk '{print $3}'`
                                 if [ `ls -a $x/.deleted/|wc -l` -gt 2 ];then
                                     if(whiptail --title "Warnning" --yesno "recycle not empty,continue?
-回收站中存在文件，是否确认要继续？" 10 60);then
+回收站中存在文件，是否确認要繼續？" 10 60);then
                                         checkClearSmb
                                         rm -rf $x/.deleted/*
                                         rm -rf $x/.deleted/.*
@@ -868,10 +868,10 @@ if [ $L = "en" ];then
     "c" "Uninstall." \
     3>&1 1>&2 2>&3)
 else
-    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "安装配置VIM！" 12 60 4 \
-    "a" "安装VIM并简单配置，如配色行号等。" \
-    "b" "安装VIM并配置'vim-for-server'。" \
-    "c" "还原配置。" \
+    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "安裝配置VIM！" 12 60 4 \
+    "a" "安裝VIM并簡單配置，如配色行号等。" \
+    "b" "安裝VIM并配置'vim-for-server'。" \
+    "c" "還原配置。" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
@@ -880,7 +880,7 @@ if [ $exitstatus = 0 ]; then
         a )
         if(whiptail --title "Yes/No Box" --yesno "
 Install vim & simply config display.Continue?
-安装VIM并简单配置，如配色行号等，基本是vim原味儿。是否继续？
+安裝VIM并簡單配置，如配色行号等，基本是vim原味兒。是否繼續？
             " 10 60) then
             if [ ! -f /root/.vimrc ] || [ `cat /root/.vimrc|wc -l` = 0 ] || [ `dpkg -l |grep vim|wc -l` = 0 ];then
                 apt -y install vim
@@ -936,7 +936,7 @@ EOF
             }|whiptail --gauge "installing" 10 60
             whiptail --title "Success" --msgbox "
     Install & config complete!
-    安装配置完成!
+    安裝配置完成!
             " 10 60
         else
             chVim
@@ -944,11 +944,11 @@ EOF
             ;;
         b | B )
         if(whiptail --title "Yes/No Box" --yesno "
-安装VIM并配置 \'vim-for-server\'(https://github.com/wklken/vim-for-server).
+安裝VIM并配置 \'vim-for-server\'(https://github.com/wklken/vim-for-server).
 yes or no?
             " 12 60) then
             echo "Use curl or git? If one not work,change to another."
-            echo "选择git或curl，如果一个方式不行可以换一个。"
+            echo "選擇git或curl，如果一個方式不行可以換一個。"
             echo "1 ) git"
             echo "2 ) curl"
             echo "Please choose:"
@@ -972,7 +972,7 @@ yes or no?
                     rm -rf vim-for-server
                     whiptail --title "Success" --msgbox "
             Install & config complete!
-            安装配置完成！
+            安裝配置完成！
                     " 10 60
                     ;;
                 * )
@@ -991,7 +991,7 @@ Remove Config?
                 cp ~/.vimrc.bak ~/.vimrc
                 whiptail --title "Success" --msgbox "
 Done
-已经完成配置
+已經完成配置
                 " 10 60
             else
                 chVim
@@ -1007,7 +1007,7 @@ chSpindown(){
 spinTime(){
     x=$(whiptail --title "config" --inputbox "
 input number of minite to auto spindown:
-输入硬盘自动休眠的检测时间，周期为分钟，输入5为5分钟:
+輸入硬盤自動休眠的檢測時間，周期爲分鍾，輸入5爲5分鍾:
     " 10 60  3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
@@ -1015,7 +1015,7 @@ input number of minite to auto spindown:
         do
             if [ `echo "$x"|grep "^[0-9]*$"|wc -l` = 0 ];then
                 whiptail --title "Warnning" --msgbox "
-输入格式错误，请重新输入：
+輸入格式錯誤，請重新輸入：
                 " 10 60
                 spinTime
             else
@@ -1028,14 +1028,14 @@ eof
         service cron reload
         whiptail --title "Success" --msgbox "
 config every $x minite to check disks and auto spindown:
-已为您配置好硬盘每$x分钟自动检测硬盘和休眠。
+已爲您配置好硬盤每$x分鍾自動檢測硬盤和休眠。
         " 10 60
     fi
 }
 doSpindown(){
     if(whiptail --title "Yes/No Box" --yesno "
     Config hard drives to auto spindown?(Y/n):
-    配置硬盘自动休眠？(Y/n):
+    配置硬盤自動休眠？(Y/n):
     " 10 60) then
         if [ `dpkg -l|grep git|wc -l` = 0 ];then
             apt -y install git
@@ -1062,7 +1062,7 @@ chApm(){
     clear
     apm=$(
     whiptail --title " PveTools   Version : 2.2.5 " --menu "Config hard disks APM & AAM:
-配置硬盘静音、降温：
+配置硬盤靜音、降溫：
     " 25 60 15 \
     "128" "Config hard drivers to auto spindown." \
     "b" "Remove config hdspindown." \
@@ -1079,11 +1079,11 @@ if [ $L = "en" ];then
     "d" "Config drivers aam\apm to low temp and quiet." \
     3>&1 1>&2 2>&3)
 else
-    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置硬盘自动休眠" 25 60 15 \
-    "a" "配置硬盘自动休眠" \
-    "b" "还原硬盘自动休眠配置" \
-    "c" "配置pvestatd服务（防止休眠后马上被唤醒）。" \
-    "d" "设置硬盘静音、降温" \
+    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置硬盤自動休眠" 25 60 15 \
+    "a" "配置硬盤自動休眠" \
+    "b" "還原硬盤自動休眠配置" \
+    "c" "配置pvestatd服務（防止休眠後馬上被喚醒）。" \
+    "d" "設置硬盤靜音、降溫" \
     3>&1 1>&2 2>&3)
 fi
 if [ $1 ];then
@@ -1098,7 +1098,7 @@ if [ $exitstatus = 0 ]; then
         else
             whiptail --title "Yes/No Box" --msgbox "
 It seems you have already configed it before.
-您好像已经配置过这个了。
+您好像已經配置過這個了。
                 " 10 60
             chSpindown
         fi
@@ -1106,29 +1106,29 @@ It seems you have already configed it before.
     b )
         if(whiptail --title "Yes/No Box" --yesno "
 Remove config spindown?
-确认要还原配置？
+确認要還原配置？
         " 10 60) then
             sed -i '/spindownall/d' /etc/crontab
             rm /usr/bin/hdspindown
             if(whiptail --title "Yes/No Box" --yesno "
 Remove source code?
-是否要删除休眠程序代码？
+是否要删除休眠程序代碼？
             " 10 60) then
                 rm -rf /root/hdspindown
             fi
             whiptail --title "Success" --msgbox "
 OK
-已经完成配置
+已經完成配置
             " 10 60
         else
             chSpindown
         fi
         ;;
     c )
-        if (whiptail --title "Enable/Disable pvestatd" --yes-button "停止(Disable)" --no-button "启动(Enable)"  --yesno "
+        if (whiptail --title "Enable/Disable pvestatd" --yes-button "停止(Disable)" --no-button "啓動(Enable)"  --yesno "
 pvestatd may spinup the drivers,if hdspindown can not effective, you can disable it to make drives to spindown.
-使用lvm的时候pvestatd 可能会造成硬盘频繁唤醒从而导致hdspindown无法让你的硬盘休眠，如果需要，你可以在这里停止这个服务。
-停止这个服务，在web界面将会显示一些异常，如果需要在web界面进行操作，可以再启动这个服务。这个操作不是必须的，要自己灵活应用。
+使用lvm的時候pvestatd 可能會造成硬盤頻繁喚醒從而導緻hdspindown無法讓你的硬盤休眠，如果需要，你可以在這裏停止這個服務。
+停止這個服務，在web界面将會顯示一些異常，如果需要在web界面進行操作，可以再啓動這個服務。這個操作不是必須的，要自己靈活應用。
         " 20 60) then
         {
             pvestatd stop
@@ -1150,11 +1150,11 @@ fi
 chCpu(){
 maxCpu(){
     info=`cpufreq-info|grep -E "available|analyzing CPU|current"|sed -n "/analyz/,/analyz/p"|sed '$d'`
-    x=$(whiptail --title "Max cpufrequtils最大频率" --inputbox "
+    x=$(whiptail --title "Max cpufrequtils最大頻率" --inputbox "
 $info
 --------------------------------------------
 Input MAX_SPEED(example: 1.6GHz type 1600000):
-输入最大频率（示例：1.6GHz 输入1600000）：
+輸入最大頻率（示例：1.6GHz 輸入1600000）：
     " 20 60  3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
@@ -1164,8 +1164,8 @@ Input MAX_SPEED(example: 1.6GHz type 1600000):
                 whiptail --title "Warnning" --msgbox "
 example: 1.6GHz type 1600000
 retry
-示例：1.6GHz 输入1600000
-输入格式错误,请重新输入：
+示例：1.6GHz 輸入1600000
+輸入格式錯誤,請重新輸入：
                 " 15 60
                 maxCpu
             else
@@ -1178,11 +1178,11 @@ retry
     fi
 }
 minCpu(){
-    x=$(whiptail --title "Mini cpufrequtils最小频率" --inputbox "
+    x=$(whiptail --title "Mini cpufrequtils最小頻率" --inputbox "
 $info
 --------------------------------------------
 Input MIN_SPEED(example: 1.6GHz type 1600000):
-输入最小频率（示例：1.6GHz 输入1600000）：
+輸入最小頻率（示例：1.6GHz 輸入1600000）：
     " 20 60   3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
@@ -1192,8 +1192,8 @@ Input MIN_SPEED(example: 1.6GHz type 1600000):
                 whiptail --title "Warnning" --msgbox "
 example: 1.6GHz type 1600000
 retry
-示例：1.6GHz 输入1600000
-输入格式错误,请重新输入：
+示例：1.6GHz 輸入1600000
+輸入格式錯誤,請重新輸入：
                 " 15 60
                 minCpu
             else
@@ -1210,7 +1210,7 @@ retry
 doChCpu(){
 if(whiptail --title "Yes/No Box" --yesno "
 Install cpufrequtils to save power?
-安装配置CPU省电?
+安裝配置CPU省電?
 " --defaultno 10 60) then
     apt -y install cpufrequtils
     if [ `grep "intel_pstate=disable" /etc/default/grub|wc -l` = 0 ];then
@@ -1228,7 +1228,7 @@ MIN_SPEED="$mi"
 EOF
     whiptail --title "Success" --msgbox "
 cpufrequtils need to reboot to apply! Please reboot.
-cpufrequtils 安装好后需要重启系统，请稍后重启。
+cpufrequtils 安裝好後需要重啓系統，請稍後重啓。
     " 10 60
 else
     main
@@ -1241,9 +1241,9 @@ if [ $L = "en" ];then
     "b" "Remove config." \
     3>&1 1>&2 2>&3)
 else
-    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "安装配置CPU省电" 25 60 15 \
-    "a" "安装配置CPU省电" \
-    "b" "还原配置" \
+    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "安裝配置CPU省電" 25 60 15 \
+    "a" "安裝配置CPU省電" \
+    "b" "還原配置" \
     3>&1 1>&2 2>&3)
 fi
 if [ $1 ];then
@@ -1258,7 +1258,7 @@ if [ $exitstatus = 0 ]; then
         else
             if(whiptail --title "Yes/No Box" --yesno "
         It seems you have already configed it before.
-        您好像已经配置过这个了。
+        您好像已經配置過這個了。
             " --defaultno 10 60) then
                 doChCpu
             else
@@ -1269,7 +1269,7 @@ if [ $exitstatus = 0 ]; then
     b )
         if(whiptail --title "Yes/No" --yesno "
 continue?
-还原配置？
+還原配置？
         " --defaultno 10 60 ) then
             #sed -i 's/ intel_pstate=disable//g' /etc/default/grub
             #rm -rf /etc/default/cpufrequtils
@@ -1280,7 +1280,7 @@ EOF
             systemctl restart cpufrequtils
             if (whiptail --title "Yes/No" --yesno "
 Uninstall cpufrequtils?
-卸载cpufrequtils?
+卸載cpufrequtils?
                 " 10 60 ) then
                 apt -y remove cpufrequtils 2>&1 &
                 sed -i 's/ intel_pstate=disable//g' /etc/default/grub
@@ -1306,9 +1306,9 @@ if [ $L = "en" ];then
     "b" "Unset config." \
     3>&1 1>&2 2>&3)
 else
-    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "安装配置CPU省电" 25 60 15 \
-    "a" "去除订阅提示" \
-    "b" "还原配置" \
+    OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "安裝配置CPU省電" 25 60 15 \
+    "a" "去除訂閱提示" \
+    "b" "還原配置" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
@@ -1317,7 +1317,7 @@ if [ $exitstatus = 0 ]; then
     a )
         if(whiptail --title "Yes/No" --yesno "
 continue?
-是否去除订阅提示?
+是否去除訂閱提示?
             " 10 60 )then
             #whiptail --title " in " --msgbox "$bver $cver  $dver" 10 60
             if [ `grep "data.status.toLowerCase() !== 'active'" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js|wc -l` = 1 ];then
@@ -1335,7 +1335,7 @@ Done!!
             else
                 whiptail --title "Success" --msgbox "
 You already removed.
-已经去除过了，不需要再次去除。
+已經去除過了，不需要再次去除。
                 " 10 60
             fi
         fi
@@ -1343,18 +1343,18 @@ You already removed.
     b )
         if(whiptail --title "Yes/No" --yesno "
 continue?
-是否还原订阅提示?
+是否還原訂閱提示?
             " 10 60) then
             if [ `grep "data.status !== 'Active'" /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js|wc -l` = 0 ];then
                 mv /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
                 whiptail --title "Success" --msgbox "
 Done!!
-还原成功！
+還原成功！
                 " 10 60
             else
                 whiptail --title "Success" --msgbox "
 You already removed.
-已经还原过了，不需要再次还原。
+已經還原過了，不需要再次還原。
                 " 10 60
             fi
         fi
@@ -1379,20 +1379,20 @@ unsetVmN(){
     list1=`echo $list|awk 'NR>1{print $1}'`
     vmid=$(whiptail  --title " PveTools   Version : 2.2.5 " --menu "
 Choose vmid to unset nested:
-选择需要关闭嵌套虚拟化的vm：" 25 60 15 \
+選擇需要關閉嵌套虛拟化的vm：" 25 60 15 \
     $(echo $ls) \
      3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         if(whiptail --title "Yes/No" --yesno "
 you choose: $vmid ,continue?
-你选的是：$vmid ，是否继续?
+你選的是：$vmid ，是否繼續?
             " 10 60)then
             while [ true ]
             do
                 if [ `echo "$vmid"|grep "^[0-9]*$"|wc -l` = 0 ];then
                     whiptail --title "Warnning" --msgbox "
-    输入格式错误，请重新输入：
+    輸入格式錯誤，請重新輸入：
                     " 10 60
                     setVmN
                 else
@@ -1402,7 +1402,7 @@ you choose: $vmid ,continue?
             if [ `qm showcmd $vmid|grep "+vmx"|wc -l` = 0 ];then
                 whiptail --title "Success" --msgbox "
     You already unseted.Nothing to do.
-    您的虚拟机未开启过嵌套虚拟化支持。
+    您的虛拟機未開啓過嵌套虛拟化支持。
                 " 10 60
             else
                 args=`qm showcmd $vmid|grep "\-cpu [0-9a-zA-Z,+_]*" -o`
@@ -1410,7 +1410,7 @@ you choose: $vmid ,continue?
                 echo  "args: "$args >> /etc/pve/qemu-server/$vmid.conf
                 whiptail --title "Success" --msgbox "
     Unset OK.Please reboot your vm.
-    您的虚拟机已经关闭嵌套虚拟化支持。重启虚拟机后生效。
+    您的虛拟機已經關閉嵌套虛拟化支持。重啓虛拟機後生效。
                 " 10 60
             fi
         else
@@ -1431,20 +1431,20 @@ setVmN(){
     list1=`echo $list|awk 'NR>1{print $1}'`
     vmid=$(whiptail  --title " PveTools   Version : 2.2.5 " --menu "
 Choose vmid to set nested:
-选择需要配置嵌套虚拟化的vm：" 25 60 15 \
+選擇需要配置嵌套虛拟化的vm：" 25 60 15 \
     $(echo $ls) \
      3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         if(whiptail --title "Yes/No" --yesno "
 you choose: $vmid ,continue?
-你选的是：$vmid ，是否继续?
+你選的是：$vmid ，是否繼續?
             " 10 60)then
             while [ true ]
             do
                 if [ `echo "$vmid"|grep "^[0-9]*$"|wc -l` = 0 ];then
                     whiptail --title "Warnning" --msgbox "
-    输入格式错误，请重新输入：
+    輸入格式錯誤，請重新輸入：
                     " 10 60
                     setVmN
                 else
@@ -1463,12 +1463,12 @@ you choose: $vmid ,continue?
                 #echo "args: "$args",+vmx" >> /etc/pve/qemu-server/$vmid.conf
                 whiptail --title "Success" --msgbox "
     Nested OK.Please reboot your vm.
-    您的虚拟机已经开启嵌套虚拟化支持。重启虚拟机后生效。
+    您的虛拟機已經開啓嵌套虛拟化支持。重啓虛拟機後生效。
                 " 10 60
             else
                 whiptail --title "Success" --msgbox "
     You already seted.Nothing to do.
-    您的虚拟机已经开启过嵌套虚拟化支持。
+    您的虛拟機已經開啓過嵌套虛拟化支持。
                 " 10 60
             fi
         else
@@ -1486,11 +1486,11 @@ if [ $L = "en" ];then
     "d" "Disable nested" \
     3>&1 1>&2 2>&3)
 else
-    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置嵌套虚拟化:" 25 60 15 \
-    "a" "开启嵌套虚拟化" \
-    "b" "开启某个虚拟机的嵌套虚拟化" \
-    "c" "关闭某个虚拟机的嵌套虚拟化" \
-    "d" "关闭嵌套虚拟化" \
+    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置嵌套虛拟化:" 25 60 15 \
+    "a" "開啓嵌套虛拟化" \
+    "b" "開啓某個虛拟機的嵌套虛拟化" \
+    "c" "關閉某個虛拟機的嵌套虛拟化" \
+    "d" "關閉嵌套虛拟化" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
@@ -1500,8 +1500,8 @@ if [ $exitstatus = 0 ]; then
             if(whiptail --title "Yes/No" --yesno "
 Are you sure to enable Nested?
 It will stop all your runnging vms (Y/n):
-确定要开启嵌套虚拟化吗？
-这个操作会停止你现在所有运行中的虚拟机!(Y/n):
+确定要開啓嵌套虛拟化嗎？
+這個操作會停止你現在所有運行中的虛拟機!(Y/n):
             " 10 60) then
                 if [ `cat /sys/module/kvm_intel/parameters/nested` = 'N' ];then
                     for i in `qm list|awk 'NR>1{print $1}'`;do
@@ -1513,18 +1513,18 @@ It will stop all your runnging vms (Y/n):
                         echo "options kvm_intel nested=1" >> /etc/modprobe.d/modprobe.conf
                         whiptail --title "Success" --msgbox "
 Nested ok.
-您已经开启嵌套虚拟化。
+您已經開啓嵌套虛拟化。
                         " 10 60
                     else
                         whiptail --title "Warnning" --msgbox "
 Your system can not open nested.
-您的系统不支持嵌套虚拟化。
+您的系統不支持嵌套虛拟化。
                         " 10 60
                     fi
                 else
                     whiptail --title "Warnning" --msgbox "
 You already enabled nested virtualization.
-您已经开启过嵌套虚拟化。
+您已經開啓過嵌套虛拟化。
                     " 10 60
                 fi
             fi
@@ -1535,7 +1535,7 @@ You already enabled nested virtualization.
                 if [ `qm list|wc -l` = 0 ];then
                     whiptail --title "Warnning" --msgbox "
 You have no vm.
-您还没有虚拟机。
+您還沒有虛拟機。
                     " 10 60
                 else
                     setVmN
@@ -1544,7 +1544,7 @@ You have no vm.
             else
                 whiptail --title "Warnning" --msgbox "
 Your system can not open nested.
-您的系统不支持嵌套虚拟化。
+您的系統不支持嵌套虛拟化。
                 " 10 60
                 chNestedV
             fi
@@ -1554,7 +1554,7 @@ Your system can not open nested.
                 if [ `qm list|wc -l` = 0 ];then
                     whiptail --title "Warnning" --msgbox "
 You have no vm.
-您还没有虚拟机。
+您還沒有虛拟機。
                     " 10 60
                 else
                     unsetVmN
@@ -1563,7 +1563,7 @@ You have no vm.
             else
                 whiptail --title "Warnning" --msgbox "
 Your system can not open nested.
-您的系统不支持嵌套虚拟化。
+您的系統不支持嵌套虛拟化。
                 " 10 60
                 chNestedV
             fi
@@ -1577,7 +1577,7 @@ else
 fi
 }
 chSensors(){
-#安装lm-sensors并配置在界面上显示
+#安裝lm-sensors并配置在界面上顯示
 #for i in `sed -n '/Chip drivers/,/\#----cut here/p' /tmp/sensors|sed '/Chip /d'|sed '/cut/d'`;do modprobe $i;done
 clear
 if [ $L = "en" ];then
@@ -1587,7 +1587,7 @@ if [ $L = "en" ];then
     3>&1 1>&2 2>&3)
 else
     x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置Sensors:" 25 60 15 \
-    "a" "安装配置温度显示" \
+    "a" "安裝配置溫度顯示" \
     "b" "删除配置" \
     3>&1 1>&2 2>&3)
 fi
@@ -1597,7 +1597,7 @@ if [ $exitstatus = 0 ]; then
     a )
         if(whiptail --title "Yes/No" --yesno "
 Your OS：$pve, you will install sensors interface, continue?(y/n)
-您的系统是：$pve, 您将安装sensors界面，是否继续？(y/n)
+您的系統是：$pve, 您将安裝sensors界面，是否繼續？(y/n)
             " 10 60) then
             js='/usr/share/pve-manager/js/pvemanagerlib.js'
             pm='/usr/share/perl5/PVE/API2/Nodes.pm'
@@ -1609,12 +1609,12 @@ Your OS：$pve, you will install sensors interface, continue?(y/n)
             pve=$OS$ver
             if [[ "$OS" != "pve" ]];then
                 whiptail --title "Warnning" --msgbox "
-您的系统不是Proxmox VE, 无法安装!
+您的系統不是Proxmox VE, 無法安裝!
 Your OS is not Proxmox VE!
                 " 10 60
                 if [[ "$bver" != "5" || "$bver" != "6" ]];then
                     whiptail --title "Warnning" --msgbox "
-您的系统版本无法安装!
+您的系統版本無法安裝!
 Your Proxmox VE version can not install!
                     " 10 60
                     main
@@ -1631,7 +1631,7 @@ Your Proxmox VE\'s version is not supported,Now quit!
             #if [[ -f "$js.backup" && -f "$sh" ]];then
             if [[ `cat $js|grep Sensors|wc -l` -gt 0 ]];then
                 whiptail --title "Warnning" --msgbox "
-您已经安装过本软件，请不要重复安装！
+您已經安裝過本軟件，請不要重複安裝！
 You already installed,Now quit!
                 " 10 60
                 chSensors
@@ -1644,7 +1644,7 @@ You already installed,Now quit!
             if [ `echo $drivers|wc -w` = 0 ];then
                 whiptail --title "Warnning" --msgbox "
 Sensors driver not found.
-没有找到任何驱动，似乎你的系统不支持。
+沒有找到任何驅動，似乎你的系統不支持。
                 " 10 60
                 chSensors
             else
@@ -1659,7 +1659,7 @@ Sensors driver not found.
                 sleep 3
                 whiptail --title "Success" --msgbox "
 Install complete,if everything ok ,it\'s showed sensors.Next, restart you web.
-安装配置成功，如果没有意外，上面已经显示sensors。下一步会重启web界面，请不要惊慌。
+安裝配置成功，如果沒有意外，上面已經顯示sensors。下一步會重啓web界面，請不要驚慌。
                 " 20 60
             fi
             rm /tmp/sensors
@@ -1728,7 +1728,7 @@ EOF
             if [ -f ./p2 ];then rm ./p2;fi
             systemctl restart pveproxy
             whiptail --title "Success" --msgbox "
-如果没有意外，已经安装完成！浏览器打开界面刷新看一下概要界面！
+如果沒有意外，已經安裝完成！浏覽器打開界面刷新看一下概要界面！
 Installation Complete! Go to websites and refresh to enjoy!
             " 10 60
         else
@@ -1738,14 +1738,14 @@ Installation Complete! Go to websites and refresh to enjoy!
     b )
         if(whiptail --title "Yes/No" --yesno "
 Uninstall?
-确认要还原配置？
+确認要還原配置？
         " 10 60)then
             js='/usr/share/pve-manager/js/pvemanagerlib.js'
             pm='/usr/share/perl5/PVE/API2/Nodes.pm'
             if [[ ! -f $js.backup && ! -f /usr/bin/sensors ]];then
                 whiptail --title "Warnning" --msgbox "
     No sensors found.
-    没有检测到安装，不需要卸载。
+    沒有檢測到安裝，不需要卸載。
                 " 10 60
             else
                 sensors-detect --auto > /tmp/sensors
@@ -1768,7 +1768,7 @@ Uninstall?
             }|whiptail --gauge "Uninstalling" 10 60 0
             whiptail --title "Success" --msgbox "
 Uninstall complete.
-卸载成功。
+卸載成功。
             " 10 60
             fi
         fi
@@ -1784,7 +1784,7 @@ chPassth(){
 enablePass(){
 if(whiptail --title "Yes/No Box" --yesno "
 Enable PCI Passthrough(need reboot host)?
-是否开启硬件直通支持（需要重启物理机）?
+是否開啓硬件直通支持（需要重啓物理機）?
 " --defaultno 10 60) then
     if [ `dmesg | grep -e DMAR -e IOMMU|wc -l` = 0 ];then
         whiptail --title "Warnning" --msgbox "
@@ -1811,12 +1811,12 @@ EOF
         fi
         whiptail --title "Success" --msgbox "
     need to reboot to apply! Please reboot.
-    安装好后需要重启系统，请稍后重启。
+    安裝好後需要重啓系統，請稍後重啓。
         " 10 60
     else
         whiptail --title "Warnning" --msgbox "
 You already configed!
-您已经配置过这个了!
+您已經配置過這個了!
 " 10 60
         chPassth
     fi
@@ -1828,7 +1828,7 @@ fi
 disablePass(){
 if(whiptail --title "Yes/No Box" --yesno "
 disable PCI Passthrough(need reboot host)?
-是否关闭硬件直通支持（需要重启物理机）?
+是否關閉硬件直通支持（需要重啓物理機）?
 " --defaultno 10 60) then
     if [ `dmesg | grep -e DMAR -e IOMMU|wc -l` = 0 ];then
         whiptail --title "Warnning" --yesno "
@@ -1844,7 +1844,7 @@ Your hardware do not support PCI Passthrough(No IOMMU)
     fi
     if [ `grep $iommu /etc/default/grub|wc -l` = 0 ];then
         whiptail --title "Warnning" --msgbox "not config yet.
-您还没有配置过该项" 10 60
+您還沒有配置過該項" 10 60
         chPassth
     else
         update-grub
@@ -1858,7 +1858,7 @@ Your hardware do not support PCI Passthrough(No IOMMU)
         }|whiptail --gauge "installing..." 10 60 10
         whiptail --title "Success" --msgbox "
 need to reboot to apply! Please reboot.
-安装好后需要重启系统，请稍后重启。
+安裝好後需要重啓系統，請稍後重啓。
         " 10 60
     fi
 else
@@ -1878,7 +1878,7 @@ enVideo(){
     if [ `grep 'iommu=on' /etc/default/grub|wc -l` = 0 ];then
         if(whiptail --title "Warnning" --yesno "
     your host not enable IOMMU,jump to enable?
-    您的主机系统尚未配置直通支持，跳转去设置？
+    您的主機系統尚未配置直通支持，跳轉去設置？
         " 10 60)then
             enablePass
         fi
@@ -1886,7 +1886,7 @@ enVideo(){
     if [ `grep 'vfio' /etc/modules|wc -l` = 0 ];then
         if(whiptail --title "Warnning" --yesno "
     your host not enable IOMMU,jump to enable?
-    您的主机系统尚未配置直通支持，跳转去设置？
+    您的主機系統尚未配置直通支持，跳轉去設置？
         " 10 60)then
             enablePass
         fi
@@ -1917,7 +1917,7 @@ getVideo(){
     done
     DISTROS=$(whiptail --title "Video cards:" --checklist \
 "Choose cards to config(* mark means configed):
-选择显卡（标*号为已经配置过的）：
+選擇顯卡（标*号爲已經配置過的）：
 " 15 90 4 \
 $(echo $cards) \
 3>&1 1>&2 2>&3)
@@ -1928,7 +1928,7 @@ $(echo $cards) \
 	    rm cards*
             if(whiptail --title "Warnning" --yesno "
 Continue?
-请确认是否继续？
+請确認是否繼續？
             " 10 60)then
                 clear
             else
@@ -1946,7 +1946,7 @@ Continue?
             else
                 if(whiptail --defaultno --title "Warnning" --yesno "
     It seems you have already configed it before.Reconfig?
-    您好像已经配置过这个了。重新配置？
+    您好像已經配置過這個了。重新配置？
                 " 10 60)then
                     clear
                 else
@@ -1980,12 +1980,12 @@ Continue?
             update-initramfs -u -k all
             whiptail --title "Success" --msgbox "
     need to reboot to apply! Please reboot.
-    安装好后需要重启系统，请稍后重启。
+    安裝好後需要重啓系統，請稍後重啓。
             " 10 60
         else
             if(whiptail --title "Warnning" --yesno "
 Continue?
-请确认是否继续？
+請确認是否繼續？
             " 10 60)then
                 clear
             else
@@ -2064,21 +2064,21 @@ $(echo $cards) \
             list1=`echo $list|awk 'NR>1{print $1}'`
             vmid=$(whiptail  --title " PveTools   Version : 2.2.5 " --radiolist "
         Choose vmid to set video card Passthrough:
-        选择需要配置显卡直通的vm：" 20 60 10 \
+        選擇需要配置顯卡直通的vm：" 20 60 10 \
             $(echo $ls) \
             3>&1 1>&2 2>&3)
             exitstatus=$?
             if [ $exitstatus = 0 ]; then
                 if(whiptail --title "Yes/No" --yesno "
         you choose: $vmid ,continue?
-        你选的是：$vmid ，是否继续?
+        你選的是：$vmid ，是否繼續?
                     " 10 60)then
                     echo $vmid>vmid
                     while [ true ]
                     do
                         if [ `echo "$vmid"|grep "^[0-9]*$"|wc -l` = 0 ];then
                             whiptail --title "Warnning" --msgbox "
-            输入格式错误，请重新输入：
+            輸入格式錯誤，請重新輸入：
                             " 10 60
                             addVideo
                         else
@@ -2088,16 +2088,16 @@ $(echo $cards) \
                     if [ $vmid -eq $confId ];then
                         whiptail --title "Warnning" --msgbox "
 You already configed!
-您已经配置过这个了!
+您已經配置過這個了!
                         " 10 60
                         addVideo
                     fi
                     opt=$(whiptail  --title " PveTools   Version : 2.2.5 " --checklist "
 Choose options:
-选择选项：" 20 60 10 \
-                    "q35" "q35支持，gpu直通建议选择，独显留空" OFF \
-                    "ovmf" "gpu直通选择" OFF \
-                    "x-vga" "主gpu，默认已选择" ON \
+選擇選項：" 20 60 10 \
+                    "q35" "q35支持，gpu直通建議選擇，獨顯留空" OFF \
+                    "ovmf" "gpu直通選擇" OFF \
+                    "x-vga" "主gpu，默認已選擇" ON \
                     3>&1 1>&2 2>&3)
                     exitstatus=$?
                     if [ $exitstatus = 0 ]; then
@@ -2132,7 +2132,7 @@ Choose options:
                             else
                                 whiptail --title "Warnning" --msgbox "
 You already configed!
-您已经配置过这个了!
+您已經配置過這個了!
                                 " 10 60
                             fi
                             if [ $confId ];then
@@ -2140,11 +2140,11 @@ You already configed!
                             fi
                             whiptail --title "Success" --msgbox "
 Configed!Please reboot vm.
-配置成功！重启虚拟机后生效。
+配置成功！重啓虛拟機後生效。
                             " 10 60
                             if(whiptail --title "Yes/No" --yesno "
 Let tool auto switch vm?
-是否自动帮你重启切换虚拟机？" 10 60)then
+是否自動幫你重啓切換虛拟機？" 10 60)then
                                 #vmid=`echo $vmid|sed 's/\"//g'`
                                 vmid=`cat vmid`
                                 rm vmid
@@ -2153,7 +2153,7 @@ Let tool auto switch vm?
                                     if [ $usb ];then
                                         if(whiptail --title "Yes/No" --yesno "
 Let tool auto switch usb?
-是否自动切换usb设备？
+是否自動切換usb設備？
                                         " 10 60)then
                                             cat $confPath$confId.conf |grep '^usb'|sed 's/ //g'>usb
                                             sed -i '/^usb/d' $confPath$confId.conf
@@ -2190,7 +2190,7 @@ Configed!
         else
             whiptail --title "Warnning" --msgbox "
 Please choose a card.
-请选择一个显卡。" 10 60
+請選擇一個顯卡。" 10 60
             addVideo
         fi
     else
@@ -2263,21 +2263,21 @@ $(echo $cards) \
             list1=`echo $list|awk 'NR>1{print $1}'`
             vmid=$(whiptail  --title " PveTools   Version : 2.2.5 " --radiolist "
         Choose vmid to set video card Passthrough:
-        选择需要配置显卡直通的vm：" 20 60 10 \
+        選擇需要配置顯卡直通的vm：" 20 60 10 \
             $(echo $ls) \
             3>&1 1>&2 2>&3)
             exitstatus=$?
             if [ $exitstatus = 0 ]; then
                 if(whiptail --title "Yes/No" --yesno "
         you choose: $vmid ,continue?
-        你选的是：$vmid ，是否继续?
+        你選的是：$vmid ，是否繼續?
                     " 10 60)then
                     echo $vmid>vmid
                     while [ true ]
                     do
                         if [ `echo "$vmid"|grep "^[0-9]*$"|wc -l` = 0 ];then
                             whiptail --title "Warnning" --msgbox "
-            输入格式错误，请重新输入：
+            輸入格式錯誤，請重新輸入：
                             " 10 60
                             addVideo
                         else
@@ -2287,16 +2287,16 @@ $(echo $cards) \
                     if [ $vmid -eq $confId ];then
                         whiptail --title "Warnning" --msgbox "
 You already configed!
-您已经配置过这个了!
+您已經配置過這個了!
                         " 10 60
                         addVideo
                     fi
                     opt=$(whiptail  --title " PveTools   Version : 2.2.5 " --checklist "
 Choose options:
-选择选项：" 20 60 10 \
-                    "q35" "q35支持，gpu直通建议选择，独显留空" OFF \
-                    "ovmf" "gpu直通选择" OFF \
-                    "x-vga" "主gpu，默认已选择" ON \
+選擇選項：" 20 60 10 \
+                    "q35" "q35支持，gpu直通建議選擇，獨顯留空" OFF \
+                    "ovmf" "gpu直通選擇" OFF \
+                    "x-vga" "主gpu，默認已選擇" ON \
                     3>&1 1>&2 2>&3)
                     exitstatus=$?
                     if [ $exitstatus = 0 ]; then
@@ -2331,7 +2331,7 @@ Choose options:
                             else
                                 whiptail --title "Warnning" --msgbox "
 You already configed!
-您已经配置过这个了!
+您已經配置過這個了!
                                 " 10 60
                             fi
                             if [ $confId ];then
@@ -2339,11 +2339,11 @@ You already configed!
                             fi
                             whiptail --title "Success" --msgbox "
 Configed!Please reboot vm.
-配置成功！重启虚拟机后生效。
+配置成功！重啓虛拟機後生效。
                             " 10 60
                             if(whiptail --title "Yes/No" --yesno "
 Let tool auto switch vm?
-是否让工具自动帮你重启切换虚拟机？" 10 60)then
+是否讓工具自動幫你重啓切換虛拟機？" 10 60)then
                                 #vmid=`echo $vmid|sed 's/\"//g'`
                                 vmid=`cat vmid`
                                 rm vmid
@@ -2372,7 +2372,7 @@ Configed!
         else
             whiptail --title "Warnning" --msgbox "
 Please choose a card.
-请选择一个显卡。" 10 60
+請選擇一個顯卡。" 10 60
             addVideo
         fi
     else
@@ -2387,9 +2387,9 @@ if [ $L = "en" ];then
     "b" "Config Video Card Passthrough to vm" \
     3>&1 1>&2 2>&3)
 else
-    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置PCI显卡直通:" 25 60 15 \
-    "a" "配置物理机显卡直通支持。" \
-    "b" "配置显卡直通给虚拟机。" \
+    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置PCI顯卡直通:" 25 60 15 \
+    "a" "配置物理機顯卡直通支持。" \
+    "b" "配置顯卡直通給虛拟機。" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
@@ -2419,10 +2419,10 @@ if [ $L = "en" ];then
     3>&1 1>&2 2>&3)
 else
     x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置硬件直通:" 25 60 15 \
-    "a" "配置开启物理机硬件直通支持。" \
-    "b" "配置关闭物理机硬件直通支持。" \
-    "c" "配置显卡直通。" \
-    "d" "配置qm set 硬盘给虚拟机。" \
+    "a" "配置開啓物理機硬件直通支持。" \
+    "b" "配置關閉物理機硬件直通支持。" \
+    "c" "配置顯卡直通。" \
+    "d" "配置qm set 硬盤給虛拟機。" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
@@ -2448,7 +2448,7 @@ fi
 checkPath(){
     x=$(whiptail --title "Choose a path" --inputbox "
 Input path:
-请输入路径：" 10 60 \
+請輸入路徑：" 10 60 \
     $1 \
     3>&1 1>&2 2>&3)
     exitstatus=$?
@@ -2457,7 +2457,7 @@ Input path:
         do
             if [ ! -d $x ];then
                 whiptail --title "Warnning" --msgbox "Path not found.
-没有检测到路径，请重新输入" 10 60
+沒有檢測到路徑，請重新輸入" 10 60
                 checkPath
             else
                 break
@@ -2474,13 +2474,13 @@ chRoot(){
         clear
         if(whiptail --title "Yes/No" --yesno "
 Continue?
-是否继续？" --defaultno 10 60 )then
+是否繼續？" --defaultno 10 60 )then
             if [ ! -f "/usr/bin/schroot" ];then
                 whiptail --title "Warnning" --msgbox "you not installed schroot.
-您还没有安装schroot。" 10 60
+您還沒有安裝schroot。" 10 60
                 if [ `ps aux|grep apt-get|wc -l` -gt 1 ];then
                     if(whiptail --title "Yes/No" --yesno "apt-get is running,killit and install schroot?
-后台有apt-get正在运行，是否杀掉进行安装？
+後台有apt-get正在運行，是否殺掉進行安裝？
                     " 10 60);then
                         killall apt-get && apt-get -y install schroot
                     else
@@ -2514,7 +2514,7 @@ EOF
             cd $chrootp
             if [ `ls $chrootp/bin|wc -l` -gt 0 ];then
                 if(whiptail --title "Warnning" --yesno "files exist, remove and reinstall?
-已经存在文件，是否清空重装？" --defaultno 10 60)then
+已經存在文件，是否清空重裝？" --defaultno 10 60)then
                     for i in `schroot --list --all-sessions|awk -F ":" '{print $2}'`;do schroot -e -c $i;done
                     killall dockerd
                     killall portainer
@@ -2553,12 +2553,12 @@ EOF
             cat << EOF >> $chrootp/etc/profile
 echo "Welcome to alpine $version chroot."
 echo "Create by PveTools."
-echo "Author: 龙天ivan"
+echo "Author: 龍天ivan"
 echo "Github: https://github.com/ivanhao/pvetoools"
 EOF
             schroot -c alpine apk update
             whiptail --title "Success" --msgbox "Done.
-安装配置完成！" 10 60
+安裝配置完成！" 10 60
             docker
             dockerWeb
             configChroot
@@ -2578,7 +2578,7 @@ EOF
             $(echo $c) \
             3>&1 1>&2 2>&3)
         else
-            x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "进入chroot环境:" 25 60 15 \
+            x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "進入chroot環境:" 25 60 15 \
             $(echo $c) \
             3>&1 1>&2 2>&3)
         fi
@@ -2598,7 +2598,7 @@ EOF
         checkSchroot
         if [ `schroot -c alpine -d /root ls /usr/bin|grep docker|wc -l` = 0 ];then
             if(whiptail --title "Warnning" --yesno "No docker found.Install?
-您还没有安装docker,是否安装？" 10 60)then
+您還沒有安裝docker,是否安裝？" 10 60)then
                 schroot -c alpine -d /root apk update
                 schroot -c alpine -d /root apk add docker
                 cat << EOF >> $chrootp/etc/profile
@@ -2638,7 +2638,7 @@ EOF
             screen -S docker -X quit
         fi
         if(whiptail --title "Yes/No" --yesno "Install portainer web interface?
-是否安装web界面（portainer）？" 10 60);then
+是否安裝web界面（portainer）？" 10 60);then
             dockerWeb
         else
             clear
@@ -2680,7 +2680,7 @@ EOF
     checkSchroot(){
         if [ `ls /usr/bin|grep schroot|wc -l` = 0 ] || [ `schroot -l|wc -l` = 0 ];then
             whiptail --title "Warnning" --msgbox "No schroot found.Install schroot first.
-您还没有安装schroot环境，请先安装。" 10 60
+您還沒有安裝schroot環境，請先安裝。" 10 60
             chRoot
         else
             if [ -f "/etc/schroot/chrootp" ];then
@@ -2691,7 +2691,7 @@ EOF
                     echo $chrootp > /etc/schroot/chrootp
                 else
                     whiptail --title "Warnning" --msgbox "Chroot path not found!
-没有检测到chroot安装目录！" 10 60
+沒有檢測到chroot安裝目錄！" 10 60
                 fi
             fi
         fi
@@ -2699,15 +2699,15 @@ EOF
     checkDocker(){
         if [ `ls $chrootp/usr/bin|grep docker|wc -l` = 0 ];then
             whiptail --title "Warnning" --msgbox "No docker found.Install docker first.
-您还没有安装docker环境，请先安装。" 10 60
+您還沒有安裝docker環境，請先安裝。" 10 60
             chRoot
         fi
     }
     checkDockerWeb(){
         if [ `schroot -c alpine -d /root docker images|grep portainer|wc -l` != 0 ];then
             whiptail --title "Warnning" --msgbox "DockerWeb found.Quit.
-您已经安装dockerWeb环境。
-请进入http://ip:9000使用。
+您已經安裝dockerWeb環境。
+請進入http://ip:9000使用。
 " 10 60
             chRoot
         fi
@@ -2732,7 +2732,7 @@ EOF
             screen -dmS docker schroot -c alpine -d /root
             if [ `screen -ls|grep docker|wc -l` != 0 ];then
                 whiptail --title "Warnning" --msgbox "Chroot daemon started.
-已经为您开启chroot后台运行环境。
+已經爲您開啓chroot後台運行環境。
                 " 10 60
                 chRoot
             else
@@ -2740,7 +2740,7 @@ EOF
             fi
         else
             if(whiptail --title "Warnning" --yesno "Chroot daemon already runngin.Restart?
-chroot后台运行环境已经运行，需要重启吗？
+chroot後台運行環境已經運行，需要重啓嗎？
                 " --defaultno 10 60)then
                 chrootReDaemon
                 checkChrootDaemon
@@ -2759,11 +2759,11 @@ chroot后台运行环境已经运行，需要重启吗？
             "d" "Change chroot path" \
             3>&1 1>&2 2>&3)
         else
-            x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置chroot环境和docker等:" 25 60 15 \
-            "a" "配置基本的chroot环境（schroot 默认为alpine)。" \
+            x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置chroot環境和docker等:" 25 60 15 \
+            "a" "配置基本的chroot環境（schroot 默認爲alpine)。" \
             "b" "Docker（alpine）。" \
             "c" "Docker配置界面（portainer in alpine）。" \
-            "d" "迁移chroot目录到其他路径。" \
+            "d" "遷移chroot目錄到其他路徑。" \
             3>&1 1>&2 2>&3)
         fi
         exitstatus=$?
@@ -2790,7 +2790,7 @@ chroot后台运行环境已经运行，需要重启吗？
     }
     mvChrootp(){
         if (whiptail --title "Yes/No" --yesno "Continue?
-是否继续?" --defaultno 10 60)then
+是否繼續?" --defaultno 10 60)then
             checkSchroot
             chrootpNew=$(whiptail --title "Choose a path" --inputbox "
 Current Path:
@@ -2798,7 +2798,7 @@ Current Path:
 $(echo $chrootp)
 ---------------------------------
 Input new chroot path:
-请输入迁移的新路径：" 20 60 \
+請輸入遷移的新路徑：" 20 60 \
 "" \
         3>&1 1>&2 2>&3)
             exitstatus=$?
@@ -2807,7 +2807,7 @@ Input new chroot path:
                 do
                     if [ ! -d $chrootpNew ];then
                         whiptail --title "Warnning" --msgbox "Path not found.
-没有检测到路径，请重新输入" 10 60
+沒有檢測到路徑，請重新輸入" 10 60
                         mvChrootp
                     else
                         break
@@ -2829,7 +2829,7 @@ Input new chroot path:
                 rm -rf $chrootp
                 sed -i 's#'$chrootp'#'$chrootpNew'#g' /etc/schroot/chroot.d/alpine.conf
                 whiptail --title "Success" --msgbox "Done.
-    迁移成功" 10 60
+    遷移成功" 10 60
                 checkChrootDaemon
             else
                 configChroot
@@ -2840,7 +2840,7 @@ Input new chroot path:
     }
     delChroot(){
         if (whiptail --title "Yes/No" --yesno "Continue?
-是否继续?" --defaultno 10 60)then
+是否繼續?" --defaultno 10 60)then
             checkSchroot
             for i in `schroot --list --all-sessions|awk -F ":" '{print $2}'`;do schroot -e -c $i;done
             apt-get -y autoremove schroot debootstrap
@@ -2866,11 +2866,11 @@ if [ $L = "en" ];then
     "d" "Remove all chroot." \
     3>&1 1>&2 2>&3)
 else
-    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置chroot环境和docker等:" 25 60 15 \
-    "a" "安装配置基本的chroot环境（schroot 默认为alpine)。" \
-    "b" "进入chroot。" \
-    "c" "Chroot后台管理。" \
-    "d" "彻底删除chroot。" \
+    x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置chroot環境和docker等:" 25 60 15 \
+    "a" "安裝配置基本的chroot環境（schroot 默認爲alpine)。" \
+    "b" "進入chroot。" \
+    "c" "Chroot後台管理。" \
+    "d" "徹底删除chroot。" \
     3>&1 1>&2 2>&3)
 fi
 exitstatus=$?
@@ -2911,20 +2911,20 @@ chQmdisk(){
         list1=`echo $list|awk 'NR>1{print $1}'`
         vmid=$(whiptail  --title " PveTools   Version : 2.2.5 " --menu "
 Choose vmid to set disk:
-选择需要配置硬盘的vm：" 20 60 10 \
+選擇需要配置硬盤的vm：" 20 60 10 \
         $(echo $ls) \
         3>&1 1>&2 2>&3)
         exitstatus=$?
         if [ $exitstatus = 0 ]; then
             if(whiptail --title "Yes/No" --yesno "
 you choose: $vmid ,continue?
-你选的是：$vmid ，是否继续?
+你選的是：$vmid ，是否繼續?
                 " 10 60)then
                 while [ true ]
                 do
                     if [ `echo "$vmid"|grep "^[0-9]*$"|wc -l` = 0 ];then
                         whiptail --title "Warnning" --msgbox "
-输入格式错误，请重新输入：
+輸入格式錯誤，請重新輸入：
                         " 10 60
                         chQmdisk
                     else
@@ -2937,17 +2937,17 @@ you choose: $vmid ,continue?
                     disks=`ls -alh /dev/disk/by-id|sed '/\.$/d'|sed '/^$/d'|awk 'NR>1{print $9" "$11" OFF"}'|sed 's/\.\.\///g'|sed '/wwn/d'|sed '/^dm/d'|sed '/lvm/d'|sed '/nvme-nvme/d'`
                     d=$(whiptail --title " PveTools Version : 2.2.5 " --checklist "
 disk list:
-已添加的硬盘:
+已添加的硬盤:
 $(cat /etc/pve/qemu-server/$vmid.conf|grep -E '^ide[0-9]|^scsi[0-9]|^sata[0-9]'|awk -F ":" '{print $1" "$2" "$3}')
 -----------------------
 Choose disk:
-选择硬盘：" 30 90 10 \
+選擇硬盤：" 30 90 10 \
                     $(echo $disks) \
                     3>&1 1>&2 2>&3)
                     exitstatus=$?
                     t=$(whiptail --title " PveTools Version : 2.2.5 " --menu "
 Choose disk type:
-选择硬盘接口类型：" 20 60 10 \
+選擇硬盤接口類型：" 20 60 10 \
                     "sata" "vm sata type" \
                     "scsi" "vm scsi type" \
                     "ide" "vm ide type" \
@@ -2968,7 +2968,7 @@ Choose disk type:
                                 #if [ $t = "ide" ] && [ `echo $i|grep "nvme"|wc -l` -gt 0 ];then
                                 if [ $t = "ide" ] && [ $did -gt 3 ];then
                                     whiptail --title "Warnning" --msgbox "ide is greate then 3.
-ide的类型已经超过3个,请重选其他类型!" 10 60
+ide的類型已經超過3個,請重選其他類型!" 10 60
                                 else
                                     qm set $vmid --$t$did /dev/disk/by-id/$i
                                 fi
@@ -2987,7 +2987,7 @@ ide的类型已经超过3个,请重选其他类型!" 10 60
                     disks=`qm config $vmid|grep -E '^ide[0-9]|^scsi[0-9]|^sata[0-9]'|awk -F ":" '{print $1" "$2$3" OFF"}'`
                     d=$(whiptail --title " PveTools Version : 2.2.5 " --checklist "
 Choose disk:
-选择硬盘：" 20 90 10 \
+選擇硬盤：" 20 90 10 \
                     $(echo $disks) \
                     3>&1 1>&2 2>&3)
                     exitstatus=$?
@@ -3016,9 +3016,9 @@ Choose disk:
         "b" "unset disk to vm." \
         3>&1 1>&2 2>&3)
     else
-        x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置qm set 物理硬盘给虚拟机:" 25 60 15 \
-        "a" "添加硬盘给虚拟机。" \
-        "b" "删除虚拟机里的硬盘。" \
+        x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "配置qm set 物理硬盤給虛拟機:" 25 60 15 \
+        "a" "添加硬盤給虛拟機。" \
+        "b" "删除虛拟機裏的硬盤。" \
         3>&1 1>&2 2>&3)
     fi
     exitstatus=$?
@@ -3045,7 +3045,7 @@ manyTools(){
         fi
         map=$(whiptail --title "nmap tools." --inputbox "
 Input the Ip address.(192.168.1.0/24)
-输入局域网ip地址段。（例子：192.168.1.0/24)
+輸入局域網ip地址段。（例子：192.168.1.0/24)
         " 10 60 \
         "" \
         3>&1 1>&2 2>&3)
@@ -3056,7 +3056,7 @@ Input the Ip address.(192.168.1.0/24)
                 if [ ! `echo $map|grep "^[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\/[0-9]*$"` ];then
                     whiptail --title "Warnning" --msgbox "
 Wrong format!!!   input again:
-格式不对！！！请重新输入：
+格式不對！！！請重新輸入：
                     " 10 60
                     nMap
                 else
@@ -3084,13 +3084,13 @@ Detect exist nameserver,Please choose:
                 3>&1 1>&2 2>&3)
             else
                 d=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "DNS - 常用的工具:
-检测到已经配置有dns服务器: \
+檢測到已經配置有dns服務器: \
 $(for i in $dname;do echo $i ;done)  \
 ------------------------------ \
-请选择以下操作：
+請選擇以下操作：
                 " 25 60 15 \
                 "a" "添加dns." \
-                "b" "替换dns." \
+                "b" "替換dns." \
                 3>&1 1>&2 2>&3)
             fi
             exitstatus=$?
@@ -3106,7 +3106,7 @@ $(for i in $dname;do echo $i ;done)  \
         else
             x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "DNS - 常用的工具:" 25 60 15 \
             "a" "8.8.8.8(谷歌)." \
-            "b" "223.5.5.5(阿里)." \
+            "b" "223.5.5.5(阿裏)." \
             3>&1 1>&2 2>&3)
         fi
         exitstatus=$?
@@ -3135,7 +3135,7 @@ $(for i in $dname;do echo $i ;done)  \
                 manyTools
             else
                 whiptail --title "Warnning" --msgbox "Unsuccess.Please retry.
-配置未成功。请重试。"  10 60
+配置未成功。請重試。"  10 60
                 setDns
             fi
         else
@@ -3145,7 +3145,7 @@ $(for i in $dname;do echo $i ;done)  \
     freeMemory(){
         clear
         if(whiptail --title "Free memory" --yesno "Free memory?
-释放内存？" 10 60 );then
+釋放内存？" 10 60 );then
             sync
             sync
             sync
@@ -3189,7 +3189,7 @@ $(for i in $dname;do echo $i ;done)  \
     vbios(){
         echo "..."
         if(whiptail --title "vbios tools" --yesno "get vbios?
-提取显卡？" 10 60 );then
+提取顯卡？" 10 60 );then
             cd ..
             git clone https://github.com/ivanhao/envytools
             cd envytools
@@ -3207,10 +3207,10 @@ $(for i in $dname;do echo $i ;done)  \
             if [ `rom-parser ../envytools/vbios.bin|grep Error|wc -l` = 0 ];then
                 cp ../envytools/vbios.bin /usr/share/kvm/
                 whiptail --title "Success" --msgbox "Done.see vbios in '/usr/share/kvm/vbios.bin'
-提取显卡vbios成功，文件在'/usr/share/kvm/vbios.bin',可以直接在配置文件中添加romfile=vbios.bin" 10 60
+提取顯卡vbios成功，文件在'/usr/share/kvm/vbios.bin',可以直接在配置文件中添加romfile=vbios.bin" 10 60
             else
                 whiptail --title "Warnning" --msgbox "Room parse error.
-提取显卡vbios失败。" 10 60
+提取顯卡vbios失敗。" 10 60
             fi
 
         fi
@@ -3224,9 +3224,9 @@ $(for i in $dname;do echo $i ;done)  \
             "b" "Uninstall" \
             3>&1 1>&2 2>&3)
         else
-            x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "USB设备做为系统盘的优化:" 25 60 15 \
-            "a" "安装。" \
-            "b" "卸载。" \
+            x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "USB設備做爲系統盤的優化:" 25 60 15 \
+            "a" "安裝。" \
+            "b" "卸載。" \
             3>&1 1>&2 2>&3)
         fi
         exitstatus=$?
@@ -3234,7 +3234,7 @@ $(for i in $dname;do echo $i ;done)  \
             case "$x" in
             a )
                 if(whiptail --title "vbios tools" --yesno "install folder2ram to optimaz USB OS storage?
-        安装USB设备做为系统盘的优化？" 10 60 );then
+        安裝USB設備做爲系統盤的優化？" 10 60 );then
                     wget https://raw.githubusercontent.com/ivanhao/pve-folder2ram/master/install.sh -O -| bash
                     whiptail --title "Success" --msgbox "Done. \
 配置完成" 10 60
@@ -3242,7 +3242,7 @@ $(for i in $dname;do echo $i ;done)  \
                 ;;
             b )
                 if(whiptail --title "vbios tools" --yesno "uninstall folder2ram optimaz?
-        卸载USB设备做系统盘的优化？" 10 60 );then
+        卸載USB設備做系統盤的優化？" 10 60 );then
                     wget https://raw.githubusercontent.com/ivanhao/pve-folder2ram/master/uninstall.sh -O -| bash
                     whiptail --title "Success" --msgbox "Done. \
 配置完成" 10 60
@@ -3267,14 +3267,14 @@ $(for i in $dname;do echo $i ;done)  \
         3>&1 1>&2 2>&3)
     else
         x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "常用的工具:" 25 60 15 \
-        "a" "局域网扫描。" \
+        "a" "局域網掃描。" \
         "b" "配置DNS。" \
-        "c" "释放内存。" \
-        "d" "speedtest测速" \
-        "e" "安装bbr\\bbr+" \
+        "c" "釋放内存。" \
+        "d" "speedtest測速" \
+        "e" "安裝bbr\\bbr+" \
         "f" "配置v2ray" \
-        "g" "显(N)卡vbios提取" \
-        "h" "USB设备做为系统盘的优化" \
+        "g" "顯(N)卡vbios提取" \
+        "h" "USB設備做爲系統盤的優化" \
         3>&1 1>&2 2>&3)
     fi
     exitstatus=$?
@@ -3315,7 +3315,7 @@ chNFS(){
         3>&1 1>&2 2>&3)
     else
         x=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "NFS:" 25 60 15 \
-        "a" "安装NFS服务器。" \
+        "a" "安裝NFS服務器。" \
         3>&1 1>&2 2>&3)
     fi
     exitstatus=$?
@@ -3323,10 +3323,10 @@ chNFS(){
         case "$x" in
         a )
             if(whiptail --title "Yes/No" --yesno "Comfirm?
-是否安装？" 10 60)then
+是否安裝？" 10 60)then
                 apt-get install nfs-kernel-server
                 whiptail --title "OK" --msgbox "Complete.If you use zfs use 'zfs set sharenfs=on <zpool> to enable NFS.'
-安装配置完成。如果你使用zfs，执行'zfs set sharenfs=on <zpool>来开启NFS。" 10 60
+安裝配置完成。如果你使用zfs，執行'zfs set sharenfs=on <zpool>來開啓NFS。" 10 60
             else
                 chNFS
             fi
@@ -3364,10 +3364,10 @@ sambaOrNfs(){
 
 omvInPve(){
     if(whiptail --title "Yes/No" --yesno "Install omv in proxmox ve directlly?
-将要在proxmox ve中直接安装omv,请确认是否继续：" 10 60);then
+将要在proxmox ve中直接安裝omv,請确認是否繼續：" 10 60);then
         if [ -f "/usr/sbin/omv-engined" ];then
             if(whiptail --title "Yes/No" --yesno "Already installed omv in proxmox ve.Reinstall?
-已经检测到安装了omv,请确认是否重装？" 10 60);then
+已經檢測到安裝了omv,請确認是否重裝？" 10 60);then
                 echo "reinstalling..."
             else
                 main
@@ -3389,7 +3389,7 @@ omvInPve(){
 ConfBackInstall(){
     path(){
 x=$(whiptail --title "config path" --inputbox "Input backup path:
-输入备份路径:" 10 60 3>&1 1>&2 2>&3)
+輸入備份路徑:" 10 60 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ];then
     if [ ! -d $x ];then
@@ -3402,7 +3402,7 @@ fi
     }
     count(){
 y=$(whiptail --title "config backup number" --inputbox "Input backup last number:
-输入保留备份数量:" 10 60 3>&1 1>&2 2>&3)
+輸入保留備份數量:" 10 60 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ];then
     if [ ! `echo $y|grep '^[0-9]$'` ];then
@@ -3464,10 +3464,10 @@ ConfBackUninstall(){
 ConfBack(){
 OPTION=$(whiptail --title " pve vm config backup " --menu "
 auto backup /etc/pve/qemu-server path's conf files.
-自动备份/etc/pve/qemu-server路径下的conf文件
+自動備份/etc/pve/qemu-server路徑下的conf文件
 Select: " 25 60 15 \
-    "a" "Install. 安装" \
-    "b" "Uninstall. 卸载" \
+    "a" "Install. 安裝" \
+    "b" "Uninstall. 卸載" \
 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
@@ -3487,7 +3487,7 @@ fi
 
 
 #--------------------------function-main-------------------------#
-#    "a" "无脑模式" \
+#    "a" "無腦模式" \
           #  a )
           #      if (whiptail --title "Test Yes/No Box" --yesno "Choose between Yes and No." 10 60) then
           #          whiptail --title "OK" --msgbox "OK" 10 60
@@ -3530,22 +3530,22 @@ Please choose:" 25 60 15 \
 else
     OPTION=$(whiptail --title " PveTools   Version : 2.2.5 " --menu "
 Github: https://github.com/ivanhao/pvetools
-请选择相应的配置：" 25 60 15 \
-    "b" "配置apt国内源(更换为ustc.edu.cn,去除企业源等)" \
-    "c" "安装配置samba或NFS" \
-    "d" "安装配置root邮件通知" \
-    "e" "安装配置zfs最大内存及zed通知" \
-    "f" "安装配置VIM" \
-    "g" "安装配置CPU省电" \
-    "h" "安装配置硬盘休眠" \
+請選擇相應的配置：" 25 60 15 \
+    "b" "配置apt國内源(更換爲ustc.edu.cn,去除企業源等)" \
+    "c" "安裝配置samba或NFS" \
+    "d" "安裝配置root郵件通知" \
+    "e" "安裝配置zfs最大内存及zed通知" \
+    "f" "安裝配置VIM" \
+    "g" "安裝配置CPU省電" \
+    "h" "安裝配置硬盤休眠" \
     "i" "配置PCI硬件直通" \
-    "j" "配置pve的web界面显示传感器温度" \
-    "k" "配置开启嵌套虚拟化" \
-    "l" "去除订阅提示" \
-    "m" "配置chroot环境和docker等" \
+    "j" "配置pve的web界面顯示傳感器溫度" \
+    "k" "配置開啓嵌套虛拟化" \
+    "l" "去除訂閱提示" \
+    "m" "配置chroot環境和docker等" \
     "n" "常用的工具" \
-    "p" "自动备份虚拟机conf文件" \
-    "u" "升级该pvetools脚本到最新版本" \
+    "p" "自動備份虛拟機conf文件" \
+    "u" "升級該pvetools腳本到最新版本" \
     "L" "Change Language" \
     3>&1 1>&2 2>&3)
 fi
@@ -3554,7 +3554,7 @@ fi
         case "$OPTION" in
         a )
             echo "Not support!Please choose other options."
-            echo "本版本已不支持无脑更新，请选择具体项目进行操作！"
+            echo "本版本已不支持無腦更新，請選擇具體項目進行操作！"
             sleep 3
             main
             chSource wn
@@ -3568,7 +3568,7 @@ fi
             chSubs wn
             chSensors wn
             echo "Config complete!Back to main menu 5s later."
-            echo "已经完成配置！5秒后返回主界面。"
+            echo "已經完成配置！5秒後返回主界面。"
             echo "5"
             sleep 1
             echo "4"
@@ -3656,7 +3656,7 @@ fi
             ;;
         L )
             if (whiptail --title "Yes/No Box" --yesno "Change Language?
-修改语言？" 10 60);then
+修改語言？" 10 60);then
                 if [ $L = "zh" ];then
                     L="en"
                 else
@@ -3725,7 +3725,7 @@ fi
 
 #--------santa-end--------------
 if (whiptail --title "Language" --yes-button "中文" --no-button "English"  --yesno "Choose Language:
-选择语言：" 10 60) then
+選擇語言：" 10 60) then
     L="zh"
 else
     L="en"
